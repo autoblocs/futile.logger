@@ -21,7 +21,7 @@
 #' layout.json(level, msg, ...)
 #'
 #' # Decorate log messages using a custom format\cr
-#' layout.format(format, datetime.fmt="%Y-%m-%d %H:%M:%S")
+#' layout.format(format, datetime.fmt="%Y-%m-%d %H:%M:%OS6")
 #'
 #' # Show the value of a single variable
 #' layout.tracearg(level, msg, ...)
@@ -113,7 +113,7 @@ flog.layout(fn, name='ROOT') %as%
 #   LEVEL [timestamp] message
 layout.simple <- function(level, msg, ...)
 {
-  the.time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+  the.time <- format(Sys.time(), "%Y-%m-%d %H:%M:%OS6")
   if (length(list(...)) > 0) {
     parsed <- lapply(list(...), function(x) if(is.null(x)) 'NULL' else x )
     msg <- do.call(sprintf, c(msg, parsed))
@@ -123,7 +123,7 @@ layout.simple <- function(level, msg, ...)
 
 layout.simple.parallel <- function(level, msg, ...)
 {
-  the.time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+  the.time <- format(Sys.time(), "%Y-%m-%d %H:%M:%OS6")
   the.pid  <- Sys.getpid()
   if (length(list(...)) > 0) {
     parsed <- lapply(list(...), function(x) if(is.null(x)) 'NULL' else x)
@@ -171,7 +171,7 @@ layout.json <- function(level, msg, ...) {
 #
 # layout <- layout.format('[~l] [~t] [~n.~f] ~m')
 # flog.layout(layout)
-layout.format <- function(format, datetime.fmt="%Y-%m-%d %H:%M:%S")
+layout.format <- function(format, datetime.fmt="%Y-%m-%d %H:%M:%OS6")
 {
   .where = -3 # get name of the function 3 deep in the call stack
               # that is, the function that has called flog.*
@@ -197,7 +197,7 @@ layout.format <- function(format, datetime.fmt="%Y-%m-%d %H:%M:%S")
 
 layout.tracearg <- function(level, msg, ...)
 {
-  the.time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+  the.time <- format(Sys.time(), "%Y-%m-%d %H:%M:%OS6")
   if (is.character(msg)) {
     if (! is.null(substitute(...))) msg <- sprintf(msg, ...)
   } else {
@@ -221,7 +221,7 @@ layout.tracearg <- function(level, msg, ...)
 
 
 # This creates a json string that will work with the appender.graylog
-layout.graylog <- function(common.fields, datetime.fmt="%Y-%m-%d %H:%M:%S")
+layout.graylog <- function(common.fields, datetime.fmt="%Y-%m-%d %H:%M:%OS6")
 {
   .where = -3 # get name of the function 3 deep in the call stack
   # that is, the function that has called flog.*
